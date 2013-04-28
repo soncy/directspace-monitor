@@ -20,7 +20,7 @@ function findSales(data) {
     var reg = /(.*?)\((.*?) Available\)(.*?)/,
         count = reg.exec(data);
 
-    if (!count || parseInt(count[2]) > 0) {
+    if (!count || parseInt(count[2]) < 1) {
         setTimeout(monitoring, 3000);
     } else {
         sendEmail(); 
@@ -29,7 +29,6 @@ function findSales(data) {
 }
 
 function sendEmail() {
-    console.log('email', sendEmailAdress);
     nodemailer.SMTP = {
         host: 'localhost'
     };
@@ -39,7 +38,7 @@ function sendEmail() {
         to: email,
         subject: 'DirectSpace 有货啦！',
         html: '<a href="https://eportal.directspace.net/cart.php?a=add&pid=262">Buy</a>',
-        body: 'DirectSpace 有货啦！'
+        body: 'DirectSpace 有货啦！ https://eportal.directspace.net/cart.php?a=add&pid=262'
     }, function(error, success){
         console.log(error);
         console.log(success);
