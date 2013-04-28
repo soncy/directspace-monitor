@@ -23,15 +23,12 @@ function findSales(data) {
 
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
-        if (!c || parseInt(c[2]) > 0) {
-            available();
-        } else {
+        if (c && parseInt(c[2]) < 1) {
             recheck();
-        }
-    } else {
-         available();
-    }
-
+            return;
+        } 
+    } 
+    available();
 }
 
 function available() {
