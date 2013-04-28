@@ -12,7 +12,7 @@ function getSourceCode(callback) {
     nodegrass.get('https://eportal.directspace.net/cart.php?gid=22', function(data, status, headers) {
         callback(data);
     }).on('error', function(e) {
-        setTimeout(monitoring, 3000);
+        recheck();
     });
 }
 
@@ -21,11 +21,14 @@ function findSales(data) {
         count = reg.exec(data);
 
     if (!count || parseInt(count[2]) < 1) {
-        setTimeout(monitoring, 3000);
+        recheck();
     } else {
         sendEmail(); 
     }
-    
+}
+
+function recheck() {
+    setTimeout(monitoring, 1 * 60 *3600); // 1分钟检查一次
 }
 
 function sendEmail() {
