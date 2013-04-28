@@ -1,8 +1,10 @@
 var https = require('https'),
     nodegrass = require('nodegrass'),
-    nodemailer = require('nodemailer');
+    nodemailer = require('nodemailer'),
+    exec = require('child_process').exec;
 
 var arguments = process.argv,
+    currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || 'soncy1986@gmail.com';
 
 function getSourceCode(callback) {
@@ -27,17 +29,17 @@ function findSales(data) {
 }
 
 function sendEmail() {
-    console.log('email', email);
+    console.log('email', sendEmailAdress);
     nodemailer.SMTP = {
         host: 'localhost'
     };
 
     nodemailer.send_mail({
-        sender: 'directspace@directspace.net',
+        sender: sendEmailAdress,
         to: email,
-        subject: 'DirectSpace',
-        html: 'test',
-        body: 'test'
+        subject: 'DirectSpace 有货啦！',
+        html: '<a href="https://eportal.directspace.net/cart.php?a=add&pid=262">Buy</a>',
+        body: 'DirectSpace 有货啦！'
     }, function(error, success){
         console.log(error);
         console.log(success);
@@ -46,9 +48,32 @@ function sendEmail() {
 }
 
 function monitoring() {
-    getSourceCode(function(data) {
-        findSales(data)
+    execSystemCommand('echo `whoami`', function(error, stdout, stderr) {
+        currUser = stdout;
     });
+    
+    execSystemCommand('hostname', function(error, stdout, stderr) {
+        hostName = stdout;
+    });
+}
+
+function execSystemCommand(command, callback) {
+    exec(command, function(error, stdout, stderr) {
+        callback(error, stdout, stderr);
+        getSendEmailAdress();
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+    });
+}
+
+function getSendEmailAdress() {
+    if (currUser && hostName) {
+        sendEmailAdress = currUser.trim() + '@' + hostName;
+        getSourceCode(function(data) {
+            findSales(data)
+        });
+    }
 }
 
 monitoring();
