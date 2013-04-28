@@ -23,13 +23,25 @@ function findSales(data) {
     if (!count || parseInt(count[2]) < 1) {
         recheck();
     } else {
+        console.log(nowDate() + ' ======== 放货了，已发送邮件到:' + email +' =======');
         sendEmail(); 
     }
 }
 
 function recheck() {
-    console.log('======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(monitoring, 1 * 60 *3600); // 1分钟检查一次
+    console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
+    setTimeout(monitoring, 1 * 60 * 1000); // 1分钟检查一次
+}
+
+function nowDate() {
+    var date = new Date(),
+        year = date.getFullYear(),
+        month = date.getMonth(),
+        day = date.getDate(),
+        hour = date.getHours(),
+        minute = date.getMinutes();
+
+    return [year, month, day].join('-') + ' ' + [hour, minute].join(':');
 }
 
 function sendEmail() {
