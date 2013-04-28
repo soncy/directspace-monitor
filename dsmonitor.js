@@ -28,6 +28,7 @@ function findSales(data) {
 }
 
 function recheck() {
+    console.log('======== 本次检查没有放货，1分钟后再次检查 =======');
     setTimeout(monitoring, 1 * 60 *3600); // 1分钟检查一次
 }
 
