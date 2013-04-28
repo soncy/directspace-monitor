@@ -11,4 +11,5 @@
     node dsmonitor.js youremail@email.com 
 
 youremail@email.com替换成接收邮件的邮箱，不填的话会发送到我的邮箱哦，如果发到139的邮箱，就可以设置短信提醒了
+
 邮件标题：`DirectSpace 有货啦！`
