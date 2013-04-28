@@ -2,7 +2,7 @@
 
 ## 使用前提
     
-安装了`git`和`nodejs`
+安装了`git`，`nodejs`，`sendmail`
 
 ## 使用方法
 
