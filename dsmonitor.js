@@ -17,15 +17,26 @@ function getSourceCode(callback) {
 }
 
 function findSales(data) {
-    var reg = /(.*?)\((.*?) Available\)(.*?)/,
-        count = reg.exec(data);
+    var reg = /(.*?)DSVPS\.1\<\/strong\>(.*?)\<strong(.*?)/,
+        count = reg.exec(data),
+        regString = count[2];
 
-    if (!count || parseInt(count[2]) > 0) {
-        console.log(nowDate() + ' ======== 放货了，已发送邮件到:' + email +' =======');
-        sendEmail(); 
+    if (~regString.indexOf('em')) {
+        var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
+        if (!c || parseInt(c[2]) > 0) {
+            available();
+        } else {
+            recheck();
+        }
     } else {
-        recheck();
+         available();
     }
+
+}
+
+function available() {
+    console.log(nowDate() + ' ======== 放货了，已发送邮件到:' + email +' =======');
+    sendEmail();
 }
 
 function recheck() {
