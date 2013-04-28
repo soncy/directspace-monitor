@@ -91,15 +91,20 @@ function execSystemCommand(command, callback) {
     try{
         exec(command, function(error, stdout, stderr) {
             callback(error, stdout, stderr);
-            getSendEmailAdress();
             if (error !== null) {
                 console.log('exec error: ' + error);
+                setDefault();
             }
+            getSendEmailAdress();
         });
     } catch (e) {
-        currUser = 'directspace';
-        hostName = 'directspace.net';
+        setDefault();
     }
+}
+
+function setDefault() {
+    currUser = 'directspace';
+    hostName = 'directspace.net';
 }
 
 function start() {
