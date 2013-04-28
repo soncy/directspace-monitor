@@ -63,6 +63,10 @@ function sendEmail() {
 }
 
 function monitoring() {
+    if (sendEmailAdress) {
+        start();
+        return;
+    }
     execSystemCommand('echo `whoami`', function(error, stdout, stderr) {
         currUser = stdout;
     });
@@ -87,12 +91,16 @@ function execSystemCommand(command, callback) {
     }
 }
 
+function start() {
+    getSourceCode(function(data) {
+        findSales(data)
+    });
+}
+
 function getSendEmailAdress() {
     if (currUser && hostName) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
-        getSourceCode(function(data) {
-            findSales(data)
-        });
+        start();
     }
 }
 
