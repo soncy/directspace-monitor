@@ -20,11 +20,11 @@ function findSales(data) {
     var reg = /(.*?)\((.*?) Available\)(.*?)/,
         count = reg.exec(data);
 
-    if (!count || parseInt(count[2]) < 1) {
-        recheck();
-    } else {
+    if (!count || parseInt(count[2]) > 0) {
         console.log(nowDate() + ' ======== 放货了，已发送邮件到:' + email +' =======');
         sendEmail(); 
+    } else {
+        recheck();
     }
 }
 
