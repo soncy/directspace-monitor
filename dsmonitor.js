@@ -52,7 +52,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(monitoring, 1 * 60 * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
@@ -85,10 +85,6 @@ function sendEmail() {
 }
 
 function monitoring() {
-    if (sendEmailAdress) {
-        start();
-        return;
-    }
     getSystemInfo();
 }
 
