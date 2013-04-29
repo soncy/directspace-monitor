@@ -5,7 +5,20 @@ var https = require('https'),
 
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
-    email = arguments[2] || 'soncy1986@gmail.com';
+    email = arguments[2] || 'soncy1986@gmail.com',
+    test = arguments[3];
+
+function istest() {
+
+    if (test && (test === '-t' || test === '--test' )) {
+        return true;
+    }
+
+    if (!test && (email === '-t' || email === '--test')) {
+        return true;
+    }
+
+}
 
 function getSourceCode(callback) {
 
@@ -71,10 +84,23 @@ function sendEmail() {
 }
 
 function monitoring() {
+
+    if (istest()) {
+        console.log('======== 测试模式，直接发送 ======');
+        setDefault();
+        getSendEmailAdress();
+        sendEmail();
+        return;
+    }
+
     if (sendEmailAdress) {
         start();
         return;
     }
+    getSystemInfo();
+}
+
+function getSystemInfo() {
     execSystemCommand('echo `whoami`', function(error, stdout, stderr) {
         currUser = stdout;
     });
@@ -93,6 +119,7 @@ function execSystemCommand(command, callback) {
                 setDefault();
             }
             getSendEmailAdress();
+            start();
         });
     } catch (e) {
         setDefault();
@@ -113,7 +140,6 @@ function start() {
 function getSendEmailAdress() {
     if (currUser && hostName) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
-        start();
     }
 }
 
