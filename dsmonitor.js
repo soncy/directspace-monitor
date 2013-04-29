@@ -9,7 +9,7 @@ var arguments = process.argv,
     test = arguments[3],
     isSendTestemail = false;
 
-function istest() {
+function __istest__() {
 
     if (test && (test === '-t' || test === '--test' )) {
         return true;
@@ -78,35 +78,34 @@ function sendEmail() {
         html: '<a href="https://eportal.directspace.net/cart.php?a=add&pid=262">Buy</a>',
         body: 'DirectSpace 有货啦！ https://eportal.directspace.net/cart.php?a=add&pid=262'
     }, function(error, success){
-        console.log(error);
-        console.log(success);
-        console.log('Message ' + success ? 'sent' : 'failed');
+        console.log('发送到' + email + '： ' + (error ? '失败，检查sendmail是否安装并启动' : '成功'));
     });
 }
 
 function monitoring() {
-    getSystemInfo();
-}
-
-function getSystemInfo() {
-    execSystemCommand('echo `whoami`', function(error, stdout, stderr) {
+    execSystemCommand('echo `whoami`', function(stdout) {
         currUser = stdout;
+        getSendEmailAdress(function() {
+            start();
+        });
     });
     
-    execSystemCommand('hostname', function(error, stdout, stderr) {
+    execSystemCommand('hostname', function(stdout) {
         hostName = stdout;
+        getSendEmailAdress(function() {
+            start();
+        });
     });
 }
 
 function execSystemCommand(command, callback) {
     try{
         exec(command, function(error, stdout, stderr) {
-            callback(error, stdout, stderr);
+            callback(stdout);
             if (error !== null) {
                 console.log('exec error: ' + error);
                 setDefault();
             }
-            getSendEmailAdress();
         });
     } catch (e) {
         setDefault();
@@ -119,7 +118,7 @@ function setDefault() {
 }
 
 function start() {
-    if (istest() && !isSendTestemail) {
+    if (__istest__() && !isSendTestemail) {
         sendEmail();
         console.log("======= 发送测试邮件 =========");
         isSendTestemail = true;
@@ -132,10 +131,10 @@ function start() {
     });
 }
 
-function getSendEmailAdress() {
+function getSendEmailAdress(callback) {
     if (currUser && hostName) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
-        start();
+        callback();
     }
     
 }
