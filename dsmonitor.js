@@ -6,7 +6,8 @@ var https = require('https'),
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || 'soncy1986@gmail.com',
-    test = arguments[3];
+    test = arguments[3],
+    isSendTestemail = false;
 
 function istest() {
 
@@ -84,15 +85,6 @@ function sendEmail() {
 }
 
 function monitoring() {
-
-    if (istest()) {
-        console.log('======== 测试模式，直接发送 ======');
-        setDefault();
-        getSendEmailAdress();
-        sendEmail();
-        return;
-    }
-
     if (sendEmailAdress) {
         start();
         return;
@@ -119,7 +111,6 @@ function execSystemCommand(command, callback) {
                 setDefault();
             }
             getSendEmailAdress();
-            start();
         });
     } catch (e) {
         setDefault();
@@ -132,6 +123,14 @@ function setDefault() {
 }
 
 function start() {
+    if (istest() && !isSendTestemail) {
+        sendEmail();
+        console.log("======= 发送测试邮件 =========");
+        isSendTestemail = true;
+        start();
+        return;
+    }
+
     getSourceCode(function(data) {
         findSales(data)
     });
@@ -140,7 +139,9 @@ function start() {
 function getSendEmailAdress() {
     if (currUser && hostName) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
+        start();
     }
+    
 }
 
 monitoring();
