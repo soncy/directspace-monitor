@@ -37,14 +37,14 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    var g = nodegrass.get(URL, function(data, status, headers, res) {
-        callback(data, g);
+    nodegrass.get(URL, function(data, status, headers, res) {
+        callback(data, res);
     }).on('error', function(e) {
         recheck();
     });
 }
 
-function findSales(data, g) {
+function findSales(data, res) {
     var reg = /(.*?)DSVPS\.1\<\/strong\>(.*?)\<strong(.*?)/,
         count = reg.exec(data),
         regString = count[2];
@@ -52,7 +52,7 @@ function findSales(data, g) {
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
         if (c && parseInt(c[2]) < 1) {
-            g = null;
+            res = null;
             recheck();
             return;
         } 
