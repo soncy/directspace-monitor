@@ -57,7 +57,8 @@ function findSales(data) {
             recheck();
             return;
         } 
-    } 
+    }
+    data = null;
     available();
 }
 
