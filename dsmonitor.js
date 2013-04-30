@@ -39,11 +39,10 @@ function getSourceCode(callback) {
 
     nodegrass.get(URL, function(data, status, headers) {
         callback(data);
+        callback = null;
     }).on('error', function(e) {
         recheck();
     });
-
-    callback = null;
 }
 
 function findSales(data) {
@@ -124,11 +123,12 @@ function execSystemCommand(command, callback) {
                 setDefault();
             }
             a.kill();
+            callback = null;
         });
     } catch (e) {
         setDefault();
     }
-    callback = null;
+
     return a;
 }
 
