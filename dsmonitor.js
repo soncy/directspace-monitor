@@ -18,6 +18,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
+    checkTime = 60, //单位：秒
     test = arguments[3],
     tested = false;
 
@@ -52,13 +53,12 @@ function findSales(data, res) {
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
         if (c && parseInt(c[2]) < 1) {
-            data = null;
             res = null;
-            //recheck();
-            //return;
+            recheck();
+            return;
         } 
     }
-    //available();
+    available();
 }
 
 function available() {
@@ -68,7 +68,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(start, 1 * 10 * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
