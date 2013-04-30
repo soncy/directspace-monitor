@@ -39,7 +39,6 @@ function getSourceCode(callback) {
 
     nodegrass.get(URL, function(data, status, headers) {
         callback(data);
-        data = null;
     }).on('error', function(e) {
         recheck();
     });
@@ -67,7 +66,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(start, 1 * 10 * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
