@@ -19,7 +19,8 @@ var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
     test = arguments[3],
-    tested = false;
+    tested = false,
+    timeout = null;
 
 function __istest__() {
     if (tested) return false;
@@ -67,7 +68,8 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
+    timeout = null;
+    timeout = setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
