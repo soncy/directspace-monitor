@@ -42,6 +42,8 @@ function getSourceCode(callback) {
     }).on('error', function(e) {
         recheck();
     });
+
+    callback = null;
 }
 
 function findSales(data) {
@@ -126,6 +128,7 @@ function execSystemCommand(command, callback) {
     } catch (e) {
         setDefault();
     }
+    callback = null;
     return a;
 }
 
