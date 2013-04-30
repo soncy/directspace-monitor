@@ -19,8 +19,7 @@ var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
     test = arguments[3],
-    tested = false,
-    timeout = null;
+    tested = false;
 
 function __istest__() {
     if (tested) return false;
@@ -40,7 +39,7 @@ function getSourceCode(callback) {
 
     nodegrass.get(URL, function(data, status, headers) {
         callback(data);
-        callback = null;
+        data = null;
     }).on('error', function(e) {
         recheck();
     });
@@ -58,7 +57,6 @@ function findSales(data) {
             return;
         } 
     }
-    data = null;
     available();
 }
 
@@ -69,9 +67,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    clearTimeout(timeout);
-    timeout = null;
-    timeout = setTimeout(start, 1 * 10 * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
@@ -127,7 +123,6 @@ function execSystemCommand(command, callback) {
                 setDefault();
             }
             a.kill();
-            callback = null;
         });
     } catch (e) {
         setDefault();
