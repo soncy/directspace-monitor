@@ -1,3 +1,10 @@
+/*
+ * Created with Sublime Text (buidl 3030).
+ * User: soncy
+ * Date: 2013-04-30
+ * Time: 21:47:44
+ * Contact: http://www.qifendi.com
+ */
 var https = require('https'),
     nodegrass = require('nodegrass'),
     nodemailer = require('nodemailer'),
