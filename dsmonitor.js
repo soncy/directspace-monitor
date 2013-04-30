@@ -55,10 +55,10 @@ function findSales(data, res) {
             data = null;
             res = null;
             //recheck();
-            return;
+            //return;
         } 
     }
-    available();
+    //available();
 }
 
 function available() {
