@@ -10,21 +10,25 @@ var https = require('https'),
     nodemailer = require('nodemailer'),
     exec = require('child_process').exec;
 
+var URL = 'https://eportal.directspace.net/cart.php?gid=22',
+    DEFAULTEMAIL = 'soncy1986@gmail.com';
+
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
-    email = arguments[2] || 'soncy1986@gmail.com',
-    test = arguments[3],
-    isSendTestemail = false;
 
-var URL = 'https://eportal.directspace.net/cart.php?gid=22';
+    email = arguments[2] || DEFAULTEMAIL,
+    test = arguments[3],
+    tested = false;
 
 function __istest__() {
+    if (tested) return false;
 
     if (test && (test === '-t' || test === '--test' )) {
         return true;
     }
 
     if (!test && (email === '-t' || email === '--test')) {
+        email = DEFAULTEMAIL;
         return true;
     }
 
@@ -130,12 +134,10 @@ function setDefault() {
 }
 
 function start() {
-    if (__istest__() && !isSendTestemail) {
+    if (__istest__()) {
         sendEmail();
         console.log("======= 发送测试邮件 =========");
-        isSendTestemail = true;
-        start();
-        return;
+        tested = true;
     }
 
     getSourceCode(function(data) {
