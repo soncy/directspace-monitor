@@ -37,7 +37,7 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    var c = nodegrass.get(URL, function(data, status, headers, res) {
+    var g = nodegrass.get(URL, function(data, status, headers, res) {
         callback(data, g);
     }).on('error', function(e) {
         recheck();
