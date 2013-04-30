@@ -68,7 +68,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    timeout = null;
+    clearTimeout(timeout);
     timeout = setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
 }
 
