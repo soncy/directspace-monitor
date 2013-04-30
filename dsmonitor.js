@@ -49,6 +49,7 @@ function findSales(data) {
         count = reg.exec(data),
         regString = count[2];
 
+    data = null;
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
         if (c && parseInt(c[2]) < 1) {
@@ -66,7 +67,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    setTimeout(start, 1 * 60 * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * 10 * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
