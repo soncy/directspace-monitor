@@ -16,6 +16,8 @@ var arguments = process.argv,
     test = arguments[3],
     isSendTestemail = false;
 
+var URL = 'https://eportal.directspace.net/cart.php?gid=22';
+
 function __istest__() {
 
     if (test && (test === '-t' || test === '--test' )) {
@@ -30,7 +32,7 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    nodegrass.get('https://eportal.directspace.net/cart.php?gid=22', function(data, status, headers) {
+    nodegrass.get(URL, function(data, status, headers) {
         callback(data);
     }).on('error', function(e) {
         recheck();
@@ -82,8 +84,8 @@ function sendEmail() {
         sender: sendEmailAdress,
         to: email,
         subject: 'DirectSpace 有货啦！',
-        html: '<a href="https://eportal.directspace.net/cart.php?a=add&pid=262">Buy</a>',
-        body: 'DirectSpace 有货啦！ https://eportal.directspace.net/cart.php?a=add&pid=262'
+        html: '<a href="' + URL + '">Buy</a>',
+        body: 'DirectSpace 有货啦！' + URL
     }, function(error, success){
         console.log('发送到' + email + '： ' + (error ? '失败，检查sendmail是否安装并启动' : '成功'));
     });
