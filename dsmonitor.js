@@ -11,11 +11,12 @@ var https = require('https'),
     exec = require('child_process').exec;
 
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
-    DEFAULTEMAIL = 'soncy1986@gmail.com';
+    DEFAULTEMAIL = 'soncy1986@gmail.com',
+    DEFAULTUSER = 'directspace',
+    DEFULTHOST = 'directspace.net';
 
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
-
     email = arguments[2] || DEFAULTEMAIL,
     test = arguments[3],
     tested = false;
@@ -129,8 +130,8 @@ function execSystemCommand(command, callback) {
 }
 
 function setDefault() {
-    currUser = 'directspace';
-    hostName = 'directspace.net';
+    currUser = DEFAULTUSER;
+    hostName = DEFULTHOST;
 }
 
 function start() {
