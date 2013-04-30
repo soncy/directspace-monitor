@@ -99,17 +99,20 @@ function monitoring() {
 }
 
 function execSystemCommand(command, callback) {
+    var a = null;
     try{
-        exec(command, function(error, stdout, stderr) {
+        a = exec(command, function(error, stdout, stderr) {
             callback(stdout);
             if (error !== null) {
                 console.log('exec error: ' + error);
                 setDefault();
             }
+            a.kill();
         });
     } catch (e) {
         setDefault();
     }
+    return a;
 }
 
 function setDefault() {
@@ -136,7 +139,6 @@ function getSendEmailAdress(callback) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
         callback();
     }
-    
 }
 
 monitoring();
