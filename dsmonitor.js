@@ -52,8 +52,9 @@ function findSales(data, res) {
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
         if (c && parseInt(c[2]) < 1) {
-            data = res = null;
-            recheck();
+            data = null;
+            res = null;
+            //recheck();
             return;
         } 
     }
