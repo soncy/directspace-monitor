@@ -18,7 +18,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
-    checkTime = 1, //单位：秒
+    checkTime = 60, //单位：秒
     test = arguments[3],
     tested = false;
 
@@ -37,22 +37,18 @@ function __istest__() {
 }
 
 function getSourceCode(callback) {
-
-    callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>System Resource Features</strong>');
-
-    // var content = '';
-    // var c = https.get(URL, function(res) {
-    //     res.on('data', function(d) {
-    //         // content += d.toString();
-    //     });
-    //     res.on('end', function() {
-    //         callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>');
-    //         content = null;
-    //         res = null;
-    //         c = null;
-    //         callback = null;
-    //     });
-    // });
+    var content = '';
+    https.get(URL, function(res) {
+        res.on('data', function(d) {
+            content += d.toString();
+        });
+        res.on('end', function() {
+            callback(content);
+            res = null;
+        });
+    }).on('error', function(e) {
+        recheck();
+    });
 }
 
 function findSales(data) {
@@ -77,7 +73,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    timeout = setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
+    setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
