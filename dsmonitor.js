@@ -116,10 +116,6 @@ function monitoring() {
             start();
         });
     });
-
-    setInterval(function() {
-        memwatch.gc();
-    }, 30 * 1000);
 }
 
 function execSystemCommand(command, callback) {
