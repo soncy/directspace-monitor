@@ -41,10 +41,10 @@ function getSourceCode(callback) {
     var content = '';
     var c = https.get(URL, function(res) {
         res.on('data', function(d) {
-            content += d.toString();
+            // content += d.toString();
         });
         res.on('end', function() {
-            callback(content);
+            callback('asfsfssDSVPS.1<strong><em>-1 Available</em></strong>sfss<strong>sfs</strong>');
             content = null;
             res = null;
             c = null;
