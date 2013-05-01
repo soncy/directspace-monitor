@@ -6,7 +6,6 @@
  * Contact: http://www.qifendi.com
  */
 var https = require('https'),
-    nodegrass = require('nodegrass'),
     nodemailer = require('nodemailer'),
     exec = require('child_process').exec,
     memwatch = require('memwatch');
@@ -39,10 +38,19 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    nodegrass.get(URL, function(data, status, headers) {
-        callback(data);
-    }).on('error', function(e) {
-        recheck();
+    // nodegrass.get(URL, function(data, status, headers) {
+    //     callback(data);
+    // }).on('error', function(e) {
+    //     recheck();
+    // });
+    var content = '';
+    https.get(URL, function(res) {
+        res.on('data', function(d) {
+            content += d.toString();
+        });
+        res.on('end', function() {
+            callback(content);
+        });
     });
     
 }
