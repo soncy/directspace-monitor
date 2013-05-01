@@ -48,6 +48,7 @@ function getSourceCode(callback) {
             content = null;
             res = null;
             c = null;
+            callback = null;
         });
     });
 }
