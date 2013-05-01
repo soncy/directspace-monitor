@@ -7,7 +7,8 @@
  */
 var https = require('https'),
     nodemailer = require('nodemailer'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    memwatch = require('memwatch');
 
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
     DEFAULTEMAIL = 'soncy1986@gmail.com',
@@ -116,9 +117,9 @@ function monitoring() {
         });
     });
 
-    // setInterval(function() {
-    //     memwatch.gc();
-    // }, 30 * 1000);
+    setInterval(function() {
+        memwatch.gc();
+    }, 30 * 1000);
 }
 
 function execSystemCommand(command, callback) {
