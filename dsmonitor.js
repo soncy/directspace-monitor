@@ -11,10 +11,6 @@ var https = require('https'),
     exec = require('child_process').exec,
     memwatch = require('memwatch');
 
-memwatch.on('leak', function(info) {
-    console.log(info);
-});
-
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
     DEFAULTEMAIL = 'soncy1986@gmail.com',
     DEFAULTUSER = 'directspace',
