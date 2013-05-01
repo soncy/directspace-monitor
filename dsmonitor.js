@@ -44,7 +44,7 @@ function getSourceCode(callback) {
     }).on('error', function(e) {
         recheck();
     });
-    callback = null;
+    
 }
 
 function findSales(data) {
