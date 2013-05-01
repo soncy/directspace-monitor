@@ -39,13 +39,15 @@ function __istest__() {
 function getSourceCode(callback) {
 
     var content = '';
-    https.get(URL, function(res) {
+    var c = https.get(URL, function(res) {
         res.on('data', function(d) {
             content += d.toString();
         });
         res.on('end', function() {
             callback(content);
             content = null;
+            res = null;
+            c = null;
         });
     });
 }
