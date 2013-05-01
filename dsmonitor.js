@@ -17,7 +17,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
-    checkTime = 10, //单位：秒
+    checkTime = 120, //单位：秒
     test = arguments[3],
     tested = false;
 
