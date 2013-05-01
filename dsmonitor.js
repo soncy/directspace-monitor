@@ -69,7 +69,7 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    //setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
+    setInterval(start, 1 * checkTime * 1000); // 1分钟检查一次
 }
 
 function nowDate() {
