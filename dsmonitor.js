@@ -37,19 +37,16 @@ function __istest__() {
 
 function getSourceCode(callback) {
     var content = '';
-    var h = https.get(URL, function(res) {
+    https.get(URL, function(res) {
         res.on('data', function(d) {
             content += d.toString();
         });
         res.on('end', function() {
             callback(content);
-            res = null;
-            content = null;
         });
     }).on('error', function(e) {
         recheck();
     });
-    h = null;
 }
 
 function findSales(data) {
