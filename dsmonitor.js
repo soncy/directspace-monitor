@@ -37,7 +37,7 @@ function __istest__() {
 
 function getSourceCode(callback) {
     var content = '';
-    https.get(URL, function(res) {
+    var req = https.get(URL, function(res) {
         res.on('data', function(d) {
             content += d.toString();
         });
@@ -47,6 +47,7 @@ function getSourceCode(callback) {
     }).on('error', function(e) {
         recheck();
     });
+    req = null;
 }
 
 function findSales(data) {
