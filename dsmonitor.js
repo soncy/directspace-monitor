@@ -41,6 +41,7 @@ function getSourceCode(callback) {
 
     nodegrass.get(URL, function(data, status, headers, res) {
         callback(data, res);
+        data = null;
     }).on('error', function(e) {
         recheck();
     });
