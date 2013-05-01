@@ -7,8 +7,7 @@
  */
 var https = require('https'),
     nodemailer = require('nodemailer'),
-    exec = require('child_process').exec,
-    memwatch = require('memwatch');
+    exec = require('child_process').exec;
 
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
     DEFAULTEMAIL = 'soncy1986@gmail.com',
