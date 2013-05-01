@@ -140,7 +140,6 @@ function setDefault() {
 }
 
 function start() {
-    var hd = new memwatch.HeapDiff();
     if (__istest__()) {
         sendEmail();
         console.log("======= 发送测试邮件 =========");
@@ -150,8 +149,6 @@ function start() {
     getSourceCode(function(data) {
         findSales(data)
     });
-    var diff = hd.end();
-    console.log(diff);
 }
 
 function getSendEmailAdress(callback) {
