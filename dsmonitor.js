@@ -43,6 +43,8 @@ function getSourceCode(callback) {
         });
         res.on('end', function() {
             callback(content);
+            res = null;
+            content = null;
         });
     }).on('error', function(e) {
         recheck();
