@@ -8,7 +8,12 @@
 var https = require('https'),
     nodegrass = require('nodegrass'),
     nodemailer = require('nodemailer'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    memwatch = require('memwatch');
+
+memwatch.on('leak', function(info) {
+    console.log(info);
+});
 
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
     DEFAULTEMAIL = 'soncy1986@gmail.com',
@@ -18,7 +23,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
-    checkTime = 60, //单位：秒
+    checkTime = 10, //单位：秒
     test = arguments[3],
     tested = false;
 
@@ -69,6 +74,7 @@ function available() {
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
     setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
+    memwatch.gc();
 }
 
 function nowDate() {
@@ -138,6 +144,7 @@ function setDefault() {
 }
 
 function start() {
+    var hd = new memwatch.HeapDiff();
     if (__istest__()) {
         sendEmail();
         console.log("======= 发送测试邮件 =========");
@@ -147,6 +154,8 @@ function start() {
     getSourceCode(function(data) {
         findSales(data)
     });
+    var diff = hd.end();
+    console.log(diff);
 }
 
 function getSendEmailAdress(callback) {
