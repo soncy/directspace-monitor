@@ -17,7 +17,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
-    checkTime = 60, //单位：秒
+    checkTime = 5, //单位：秒
     test = arguments[3],
     tested = false;
 
@@ -37,7 +37,7 @@ function __istest__() {
 
 function getSourceCode(callback) {
     var content = '';
-    https.get(URL, function(res) {
+    var h = https.get(URL, function(res) {
         res.on('data', function(d) {
             content += d.toString();
         });
@@ -48,6 +48,7 @@ function getSourceCode(callback) {
     }).on('error', function(e) {
         recheck();
     });
+    h.end();
 }
 
 function findSales(data) {
