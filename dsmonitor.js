@@ -7,8 +7,7 @@
  */
 var https = require('https'),
     nodemailer = require('nodemailer'),
-    exec = require('child_process').exec,
-    memwatch = require('memwatch');
+    exec = require('child_process').exec;
 
 var URL = 'https://eportal.directspace.net/cart.php?gid=22',
     DEFAULTEMAIL = 'soncy1986@gmail.com',
@@ -38,11 +37,6 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    // nodegrass.get(URL, function(data, status, headers) {
-    //     callback(data);
-    // }).on('error', function(e) {
-    //     recheck();
-    // });
     var content = '';
     https.get(URL, function(res) {
         res.on('data', function(d) {
@@ -50,9 +44,9 @@ function getSourceCode(callback) {
         });
         res.on('end', function() {
             callback(content);
+            content = null;
         });
     });
-    
 }
 
 function findSales(data) {
@@ -122,9 +116,9 @@ function monitoring() {
         });
     });
 
-    setInterval(function() {
-        memwatch.gc();
-    }, 30 * 1000);
+    // setInterval(function() {
+    //     memwatch.gc();
+    // }, 30 * 1000);
 }
 
 function execSystemCommand(command, callback) {
