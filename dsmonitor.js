@@ -18,7 +18,7 @@ var URL = 'https://eportal.directspace.net/cart.php?gid=22',
 var arguments = process.argv,
     currUser = hostName = sendEmailAdress= null,
     email = arguments[2] || DEFAULTEMAIL,
-    checkTime = 10, //单位：秒
+    checkTime = 1, //单位：秒
     test = arguments[3],
     tested = false;
 
@@ -39,7 +39,7 @@ function __istest__() {
 function getSourceCode(callback) {
 
     callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>');
-    
+
     // var content = '';
     // var c = https.get(URL, function(res) {
     //     res.on('data', function(d) {
