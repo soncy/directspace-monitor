@@ -21,7 +21,6 @@ var arguments = process.argv,
     email = arguments[2] || DEFAULTEMAIL,
     checkTime = 10, //单位：秒
     test = arguments[3],
-    content = null;
     tested = false;
 
 function __istest__() {
@@ -40,24 +39,21 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    nodegrass.get(URL, function(data, status, headers, res) {
-        content = data;
-        data = null;
-        callback(res);
+    nodegrass.get(URL, function(data, status, headers) {
+        callback(data);
     }).on('error', function(e) {
         recheck();
     });
 }
 
-function findSales(res) {
+function findSales(data) {
     var reg = /(.*?)DSVPS\.1\<\/strong\>(.*?)\<strong(.*?)/,
-        count = reg.exec(content),
+        count = reg.exec(data),
         regString = count[2];
 
     if (~regString.indexOf('em')) {
         var c = /(.*?)\((.*?) Available(.*?)/.exec(regString);
         if (c && parseInt(c[2]) < 1) {
-            res = null;
             recheck();
             return;
         } 
@@ -143,8 +139,6 @@ function setDefault() {
 }
 
 function start() {
-    content = null;
-    
     if (__istest__()) {
         sendEmail();
         console.log("======= 发送测试邮件 =========");
