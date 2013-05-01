@@ -21,7 +21,6 @@ var arguments = process.argv,
     email = arguments[2] || DEFAULTEMAIL,
     checkTime = 10, //单位：秒
     test = arguments[3],
-    timeout = null,
     tested = false;
 
 function __istest__() {
@@ -42,10 +41,10 @@ function getSourceCode(callback) {
 
     nodegrass.get(URL, function(data, status, headers) {
         callback(data);
-        memwatch.gc();
     }).on('error', function(e) {
         recheck();
     });
+    callback = null;
 }
 
 function findSales(data) {
@@ -70,7 +69,6 @@ function available() {
 
 function recheck() {
     console.log(nowDate() + ' ======== 本次检查没有放货，1分钟后再次检查 =======');
-    timeout = null;
     timeout = setTimeout(start, 1 * checkTime * 1000); // 1分钟检查一次
 }
 
@@ -115,6 +113,10 @@ function monitoring() {
             start();
         });
     });
+
+    setInterval(function() {
+        memwatch.gc();
+    }, 30 * 1000);
 }
 
 function execSystemCommand(command, callback) {
@@ -149,7 +151,6 @@ function start() {
 
     getSourceCode(function(data) {
         findSales(data);
-        data = null;
     });
 }
 
