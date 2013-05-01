@@ -38,19 +38,21 @@ function __istest__() {
 
 function getSourceCode(callback) {
 
-    var content = '';
-    var c = https.get(URL, function(res) {
-        res.on('data', function(d) {
-            // content += d.toString();
-        });
-        res.on('end', function() {
-            callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>');
-            content = null;
-            res = null;
-            c = null;
-            callback = null;
-        });
-    });
+    callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>');
+    
+    // var content = '';
+    // var c = https.get(URL, function(res) {
+    //     res.on('data', function(d) {
+    //         // content += d.toString();
+    //     });
+    //     res.on('end', function() {
+    //         callback('asfsfss<strong>DSVPS.1</strong> <em>(-2 Available)</em> - <strong>System Resource Features</strong>');
+    //         content = null;
+    //         res = null;
+    //         c = null;
+    //         callback = null;
+    //     });
+    // });
 }
 
 function findSales(data) {
