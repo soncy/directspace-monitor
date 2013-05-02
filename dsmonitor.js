@@ -123,6 +123,45 @@ DSMonitor.prototype._istest = function() {
     }
 }
 
+// ==========================================================================================
+
+function monitoring() {
+
+    // 获取当前登录用户
+    execSystemCommand('echo `whoami`', function(stdout) {
+        currUser = stdout || DEFAULTUSER;
+        monitorStart();
+    });
+    
+    // 获取当前hostname
+    execSystemCommand('hostname', function(stdout) {
+        hostName = stdout || DEFULTHOST;
+        monitorStart();
+    });
+
+}
+
+function monitorStart() {
+    if (currUser && hostName) {
+        sendEmailAdress = currUser.trim() + '@' + hostName;
+        dsmonitor.start();
+    }
+}
+
+function execSystemCommand(command, callback) {
+    try{
+        exec(command, function(error, stdout, stderr) {
+            callback(stdout);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+                callback();
+            }
+        });
+    } catch (e) {
+        callback();
+    }
+}
+
 function hasTestArgument(val) {
     return (val === '-t' || val === '--test');
 }
@@ -142,55 +181,5 @@ function nowDate() {
     return [year, month, day].join('-') + ' ' + [hour, minute].join(':');
 }
 
-function monitoring() {
-
-    // 获取当前登录用户
-    execSystemCommand('echo `whoami`', function(stdout) {
-        currUser = stdout;
-        monitorStart();
-    });
-    
-    // 获取当前hostname
-    execSystemCommand('hostname', function(stdout) {
-        hostName = stdout;
-        monitorStart();
-    });
-
-}
-
-function monitorStart() {
-    getSendEmailAdress(function() {
-        dsmonitor.start();
-    });   
-}
-
-function execSystemCommand(command, callback) {
-    try{
-        exec(command, function(error, stdout, stderr) {
-            callback(stdout);
-            if (error !== null) {
-                console.log('exec error: ' + error);
-                setDefault();
-            }
-        });
-    } catch (e) {
-        setDefault();
-    }
-}
-
-function setDefault() {
-    currUser = DEFAULTUSER;
-    hostName = DEFULTHOST;
-    monitoringStart();
-}
-
-function getSendEmailAdress(callback) {
-    if (currUser && hostName) {
-        sendEmailAdress = currUser.trim() + '@' + hostName;
-        callback();
-    }
-}
-
 var dsmonitor = new DSMonitor();
 monitoring();
-
