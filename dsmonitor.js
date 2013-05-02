@@ -19,10 +19,10 @@ var arguments   = process.argv,
     test        = arguments[3];
 
 var conf = {
-    url: "https://eportal.directspace.net/cart.php?gid=22",
-    email: arguments[2] || DEFAULTEMAIL,
-    checkTime: 10, //检查间隔，单位：秒
-    reg: [/(.*?)DSVPS\.1\<\/strong\>(.*?)\<strong(.*?)/, /(.*?)\((.*?) Available(.*?)/]
+    url       : "https://eportal.directspace.net/cart.php?gid=22",
+    email     : arguments[2] || DEFAULTEMAIL,
+    checkTime : 120, //检查间隔，单位：秒
+    reg       : [/(.*?)DSVPS\.1\<\/strong\>(.*?)\<strong(.*?)/, /(.*?)\((.*?) Available(.*?)/]
 };
 
 
