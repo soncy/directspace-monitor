@@ -77,7 +77,7 @@ DSMonitor.prototype._recheck = function() {
     var self = this;
     log(nowDate() + ':本次检查没有放货，' + checkTime + '秒后再次检查');
     setTimeout(function() {
-        self.start.call(this);
+        self.start.call(self);
     }, checkTime * 1000); // 循环检查
 }
 
