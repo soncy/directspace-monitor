@@ -147,19 +147,21 @@ function monitoring() {
     // 获取当前登录用户
     execSystemCommand('echo `whoami`', function(stdout) {
         currUser = stdout;
-        getSendEmailAdress(function() {
-            dsmonitor.start();
-        });
+        monitorStart();
     });
     
     // 获取当前hostname
     execSystemCommand('hostname', function(stdout) {
         hostName = stdout;
-        getSendEmailAdress(function() {
-            dsmonitor.start();
-        });
+        monitorStart();
     });
 
+}
+
+function monitorStart() {
+    getSendEmailAdress(function() {
+        dsmonitor.start();
+    });   
 }
 
 function execSystemCommand(command, callback) {
@@ -179,6 +181,7 @@ function execSystemCommand(command, callback) {
 function setDefault() {
     currUser = DEFAULTUSER;
     hostName = DEFULTHOST;
+    monitoringStart();
 }
 
 function getSendEmailAdress(callback) {
