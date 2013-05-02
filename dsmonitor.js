@@ -24,18 +24,11 @@ var arguments   = process.argv,
     
 
 function DSMonitor() {
-    this.tested = false;
+    
 }
 
 DSMonitor.prototype.start = function() {
     var self = this;
-
-    if (self._istest()) {
-        self._sendEmail();
-        log("发送测试邮件");
-        self.tested = true;
-    }
-
     self._getSourceCode(function(data) {
         self._findSales(data);
     });
@@ -84,11 +77,11 @@ DSMonitor.prototype._recheck = function() {
 DSMonitor.prototype._available = function() {
     var self = this;
     log(nowDate() + ':放货了，已发送邮件到:' + email);
-    self._sendEmail();
+    self.sendEmail();
 }
 
 
-DSMonitor.prototype._sendEmail = function() {
+DSMonitor.prototype.sendEmail = function() {
     nodemailer.SMTP = {
         host: 'localhost'
     };
@@ -104,24 +97,6 @@ DSMonitor.prototype._sendEmail = function() {
     });
 }
 
-DSMonitor.prototype._istest = function() {
-    var self = this;
-
-    if (self.tested) return false;
-
-    // 如果有第三个参数，则判断第三个参数
-    if (test && hasTestArgument(test)) {
-        return true;
-    }
-
-    /* 如果没有第三个参数，则判断第二个参数：email
-     * node dsmonitor.js -t 等同于 node dsmonitor DEFAULTEMAIL -t
-     */
-    if (!test && hasTestArgument(email)) {
-        email = DEFAULTEMAIL;
-        return true;
-    }
-}
 
 // ==========================================================================================
 
@@ -144,6 +119,10 @@ function monitoring() {
 function monitorStart() {
     if (currUser && hostName) {
         sendEmailAdress = currUser.trim() + '@' + hostName;
+        if (isTest()) {
+            log("发送测试邮件");
+            dsmonitor.sendEmail();   
+        }
         dsmonitor.start();
     }
 }
@@ -159,6 +138,21 @@ function execSystemCommand(command, callback) {
         });
     } catch (e) {
         callback();
+    }
+}
+
+function isTest() {
+    // 如果有第三个参数，则判断第三个参数
+    if (test && hasTestArgument(test)) {
+        return true;
+    }
+
+    /* 如果没有第三个参数，则判断第二个参数：email
+     * node dsmonitor.js -t 等同于 node dsmonitor DEFAULTEMAIL -t
+     */
+    if (!test && hasTestArgument(email)) {
+        email = DEFAULTEMAIL;
+        return true;
     }
 }
 
