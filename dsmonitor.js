@@ -171,14 +171,19 @@ function log(val) {
 }
 
 function nowDate() {
-    var date   = new Date(),
-        year   = date.getFullYear(),
-        month  = date.getMonth(),
-        day    = date.getDate(),
-        hour   = date.getHours(),
-        minute = date.getMinutes();
-
-    return [year, month, day].join('-') + ' ' + [hour, minute].join(':');
+    //日期格式 2013-4-6 4:40
+    var d = new Date();
+    return [
+        [
+            d.getFullYear(),
+            d.getMonth(),
+            d.getDate()
+        ].join('-'),
+        [
+            d.getHours(),
+            d.getMinutes()
+        ].join(':')
+    ].join(' ');
 }
 
 var dsmonitor = new DSMonitor();
